@@ -5,6 +5,10 @@ import Clang
 # https://github.com/JuliaLang/julia/issues/54664
 using REPL
 
-include("ClangTests.jl")
+include("jllenvs.jl")
+include("file.jl")
+include("module.jl")
+
+include("generators.jl")
 
 retest(Clang, ClangTests; stats=true)

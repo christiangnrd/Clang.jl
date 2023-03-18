@@ -15,6 +15,7 @@ using ReTest
 
 include("jllenvs.jl")
 include("file.jl")
+include("module.jl")
 include("generators.jl")
 
 include("test_mpi.jl")
