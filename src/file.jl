@@ -33,6 +33,6 @@ Return the unique id of the given file.
 function unique_id(file::CLFile)
     id = Ref{CXFileUniqueID}()
     ret = clang_getFileUniqueID(file, id)
-    @assert ret==0 "Error getting unique id for $file"
+    @assert ret == 0 "Error getting unique id for $file"
     id[]
 end
