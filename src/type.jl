@@ -67,6 +67,16 @@ getPointeeType(t::CXType) = clang_getPointeeType(t)
 getPointeeType(t::CLType)::CLType = clang_getPointeeType(t)
 
 """
+    getObjCObjectBaseType(T::CXType) -> CXType
+    getObjCObjectBaseType(T::CLType) -> CLType
+Retrieves the base type of the ObjCObjectType.
+If the type is not an ObjC object, an invalid type is returned.
+Wrapper for libclang's [`clang_Type_getObjCObjectBaseType`](@ref).
+"""
+getObjCObjectBaseType(t::CXType) = clang_Type_getObjCObjectBaseType(t)
+getObjCObjectBaseType(t::CLType)::CLType = clang_Type_getObjCObjectBaseType(t)
+
+"""
     getTypeDeclaration(t::CXType) -> CXCursor
     getTypeDeclaration(t::CLType) -> CLCursor
 Return the cursor for the declaration of the given type. To get the type of the cursor,
