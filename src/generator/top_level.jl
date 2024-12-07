@@ -159,6 +159,51 @@ function collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLEnumDecl, o
     return nodes
 end
 
+function collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLObjCClassRef, options)
+    skip_static_func = get(options, "skip_static_functions", false)
+    skip_static_func && getCursorLinkage(cursor) == CXLinkage_Internal && return nodes
+
+    func_type = getCursorType(cursor)
+
+    return nodes
+end
+function collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLObjCProtocolDecl, options)
+    skip_static_func = get(options, "skip_static_functions", false)
+    skip_static_func && getCursorLinkage(cursor) == CXLinkage_Internal && return nodes
+
+    func_type = getCursorType(cursor)
+
+    id = Symbol(spelling(cursor))
+
+    return nodes
+end
+function collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLObjCProtocolRef, options)
+    skip_static_func = get(options, "skip_static_functions", false)
+    skip_static_func && getCursorLinkage(cursor) == CXLinkage_Internal && return nodes
+
+    func_type = getCursorType(cursor)
+
+    id = Symbol(spelling(cursor))
+
+    return nodes
+end
+function collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLObjCInterfaceDecl, options)
+    skip_static_func = get(options, "skip_static_functions", false)
+    skip_static_func && getCursorLinkage(cursor) == CXLinkage_Internal && return nodes
+
+    func_type = getCursorType(cursor)
+
+    return nodes
+end
+function collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLObjCCategoryDecl, options)
+    skip_static_func = get(options, "skip_static_functions", false)
+    skip_static_func && getCursorLinkage(cursor) == CXLinkage_Internal && return nodes
+
+    func_type = getCursorType(cursor)
+
+    return nodes
+end
+
 # skip macro expansion since the expanded info is already embedded in the AST
 collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLMacroInstantiation, options) = nodes
 collect_top_level_nodes!(nodes::Vector{ExprNode}, cursor::CLMacroExpansion, options) = nodes
