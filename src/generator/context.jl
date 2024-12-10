@@ -80,12 +80,18 @@ Create a context from a vector of paths of headers, a vector of compiler flags a
 a option dict.
 """
 function create_context(headers::Vector, args::Vector=String[], options::Dict=Dict())
-    ctx = Context(; options)
 
     push!(args, "-nostdinc")
 
     system_dirs = map(x->x[9:end], filter(x->startswith(x, "-isystem"), args))
     dependent_headers = find_dependent_headers(headers, args, system_dirs)
+
+    _create_context(headers, args, options, system_dirs, dependent_headers)
+end
+
+function _create_context(headers::Vector, args::Vector, options::Dict, system_dirs::Vector, dependent_headers::Vector)
+
+    ctx = Context(; options)
 
     @info "Parsing headers..."
     parse_headers!(ctx, headers, args)
