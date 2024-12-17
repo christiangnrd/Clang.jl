@@ -77,6 +77,29 @@ getObjCObjectBaseType(t::CXType) = clang_Type_getObjCObjectBaseType(t)
 getObjCObjectBaseType(t::CLType)::CLType = clang_Type_getObjCObjectBaseType(t)
 
 """
+    getDeclObjCTypeEncoding(C::CXCursor) -> CXString
+    getDeclObjCTypeEncoding(C::CLCursor) -> CLString
+Returns the Objective-C type encoding for the specified declaration.
+Wrapper for libclang's [`clang_getDeclObjCTypeEncoding`](@ref).
+"""
+getDeclObjCTypeEncoding(c::CXCursor) = clang_getDeclObjCTypeEncoding(c)
+getDeclObjCTypeEncoding(c::CLCursor)::CLType = clang_getDeclObjCTypeEncoding(c)
+
+"""
+    getObjCEncoding(T::CXType) -> String
+    getObjCEncoding(T::CLType) -> String
+Returns the Objective-C type encoding for the specified `Type`.
+Wrapper for libclang's [`clang_Type_getObjCEncoding`](@ref).
+"""
+function getObjCEncoding(c::CLType)
+    cxstr = clang_Type_getObjCEncoding(c)
+    ptr = clang_getCString(cxstr)
+    s = unsafe_string(ptr)
+    clang_disposeString(cxstr)
+    return s
+end
+
+"""
     getTypeDeclaration(t::CXType) -> CXCursor
     getTypeDeclaration(t::CLType) -> CLCursor
 Return the cursor for the declaration of the given type. To get the type of the cursor,
